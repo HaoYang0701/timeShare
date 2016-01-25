@@ -1,2 +1,2 @@
-This repository is for your course final project. Your project team
-should complete all project work using this repository.
+This project is hosted on 
+sleepy-savannah-3875.herokuapp.com
