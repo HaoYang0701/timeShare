@@ -1,0 +1,23 @@
+{% extends "guru/base.html" %}
+
+
+{% block title %}
+<title> guru | calendar </title>
+{% endblock %}
+
+{% block mainsection %}
+  <div class="col-md-12">
+        <div id="calendar"> </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+    $('#calendar').fullCalendar({
+        googleCalendarApiKey: 'AIzaSyC1TITZmqLAwg3rhxAidZ_sUMv6ojbv38Y',
+        events: {
+            googleCalendarId: 'cathy.94@gmail.com'
+        }
+    });
+});
+  </script>
+{% endblock %}

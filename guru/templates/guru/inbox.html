@@ -1,0 +1,59 @@
+{% extends "guru/base.html" %}
+
+<!-- 
+	mail inbox design: 
+	http://www.bootply.com/XXmcPas41w 
+-->
+
+{% block title %}
+<title> guru | inbox </title>
+{% endblock %}
+
+{% block mainsection %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="btn-group">
+                <br>
+                <a href="/guru/compose"><button type="button" class="btn btn-default blue">Compose</button></a>
+            </div>
+            <!--<div class="pull-right">
+                <span class="text-muted"><b>1</b>–<b>20</b> of <b>50</b></span>
+                <div class="btn-group btn-group-sm">
+                     <a class="btn-floating  waves-effect waves-light blue">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                    </a>
+                    <a class="btn-floating waves-effect waves-light blue">
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </a>
+                </div>
+            </div>-->
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="list-group">
+                {% if messages %}
+                {% for message in messages %}
+                <a href="/guru/message/{{message.id}}" class="list-group-item">
+                    <!--<span class="name"><b>Justin Anderson</b></span> -->
+                     <span class="name">
+                        <div class="chip">
+                        <img src="/guru{{message.fromGuru.picture.url}}" alt="Contact Person">
+                        {{message.fromGuru.user.username}}
+                        </div>
+                    </span>
+                    <span class="">{{message.subject}}</span>
+                    <span class="detailed-txt"> ---{{message.body}}</span>
+                     <div class="chip iemailtime">{{message.date}}</div>
+                </a>
+                {% endfor %}
+                {% endif %}
+
+               
+            </div>  
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "guru/base.html" %}
+
+
+{% block title %}
+<title> guru | my reviews </title>
+{% endblock %}
+
+{% block mainsection %}
+<div class="col-md-12">
+  <h4>Needs your review</h4>
+
+  {% if needsReview %}
+  <ul class="collection">
+    {% for n in needsReview %}
+    <li class="collection-item avatar">
+      <img src="/guru{{n.listing.guru.picture.url}}" alt="" class="circle">
+      <span class="title"><b>Session name:</b> {{n.listing.subject}}</span>
+      <p><b>Instructor:</b> <a href="/guru/profile/{{n.listing.guru.user.id}}">{{n.listing.guru.user.username}} </a><br>
+         <b>Scheduled:</b> {{n.proposedTime}}
+      </p>
+      <a href="/guru/review/{{n.id}}" class="secondary-content"><b>Review</b></a>
+    </li>
+    {% endfor %}
+    
+  </ul>
+  {% else %}
+  <p> No one needs your review right now. </p>
+
+  {% endif %}
+
+  <br>
+  <h4>My Reviews</h4>
+  {% if myReviews %}
+  {% for m in myReviews %}
+    <div class="panel panel-default panel-style">
+    <div class="panel-body">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="user-info-wrap"> 
+                <div class="user-image">
+                  <img src="/guru{{m.session.listing.guru.picture.url}}" class="img-circle" width="65" height="65">
+                </div>
+                <div class="user-info">
+                  <div class="username"><a href="/guru/profile/{{m.session.listing.guru.user.id}}">{{m.session.listing.guru.user.username}}</a></div>
+
+                  {{m.session.listing.guru.rating}}
+                  <i class="glyphicon glyphicon-star"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+            
+              {{m.rating}}
+                  <i class="glyphicon glyphicon-star"></i>
+                  <hr>
+              <p> {{m.description}}
+              </p>
+            </div>
+            <div class="col-md-3">
+              <br>
+              {{m.date}}<br>
+              Location: {{m.session.listing.location}}
+            </div>
+      </div>
+    </div>
+  </div>  
+  {% endfor %} 
+    {% else %}
+  <p> You have no reviews. </p>
+  {% endif%}   
+</div>
+{% endblock %}

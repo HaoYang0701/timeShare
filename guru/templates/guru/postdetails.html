@@ -1,0 +1,57 @@
+{% extends "guru/base.html" %}
+
+
+{% block title %}
+<title> guru | details </title>
+{% endblock %}
+
+{% block mainsection %}
+      <div class="col-md-12">
+        <h3> {{listing.subject}} </h3>
+        <hr>
+        <div class="row">
+            <div class="col-md-3">
+
+              <a id="listinguser" href="/guru/profile/{{listing.guru.user.id}}">
+                <div class="user-info-wrap"> 
+                  <div class="user-image">
+                    <img src="/guru{{listing.guru.picture.url}}" alt="user" class="img-circle user-size2">
+                  </div>
+                    <div class="user-info">
+                      <div class="username">{{listing.guru.user.username}}</div>
+                      <div class="username">{{listing.guru.user.first_name}} {{listing.guru.user.last_name}}</div>       
+                      {{listing.guru.rating}} <i class="glyphicon glyphicon-star"></i>
+                    </div>
+                  </div>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <p>{{listing.description}}</p>
+            </div>
+            <div class="col-md-3">
+              {{listing.date|timesince}} ago<br>
+              Location: {{listing.location}}<br>
+              <i></i>
+            </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+               
+        </div>
+        <div class="col-md-6">  
+          {% if listing.guru.user != currUser %}
+           <a href="/guru/compose/{{listing.guru.user.id}}"><button type="button" class="btn btn-default">Message </button></a>
+           {% if interested %}
+            <a href="/guru/uninterested/{{listing.id}}"><button type="button" class="btn btn-default green">Interested ✓ </button></a>
+            {% else %}
+            <a href="/guru/interested/{{listing.id}}"><button type="button" class="btn btn-default blue">Interested ? </button></a>
+            {% endif %}
+           {% endif %}
+        </div>
+        <div class="col-md-3">
+        </div>
+      </div>
+
+  </div>
+{% endblock %}

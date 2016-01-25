@@ -1,0 +1,238 @@
+{% extends "guru/base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+<title> guru | my activity </title>
+{% endblock %}
+
+{% block mainsection %}
+<div class="row">
+  <div class="col s12">
+    <ul class="tabs">
+      <li class="tab col s3"><a class="active" href="#interested">Sessions to Learn</a></li>
+      <li class="tab col s3"><a href="#schedule">Sessions to Teach</a></li>
+      <li class="tab col s3"><a href="#calendar">Calendar</a></li>
+      <li class="tab col s3"><a href="#reminders">Reminders</a></li>
+    </ul>
+  </div>
+
+  <div id="interested" class="col s12">
+
+
+    <br>
+      <table class="responsive-table">
+        <thead>
+          <tr>
+              <th>Session Name</th>
+              <th>Instructor</th>
+              <th>Status</th>
+              <th>Details</th>
+          </tr>
+        </thead>
+       
+
+       <tbody>
+        {% if pending %}
+          {% for p in pending %}
+          <tr>
+          <td>{{p.subject}}</td>
+          <td>{{p.guru.user.username}}</td>
+          <td>Pending</td>
+          <td>N/A</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+
+        {% if rejections %}
+          {% for rejection in rejections %}
+          <tr>
+          <td>{{rejection.subject}}</td>
+          <td>{{rejection.guru.user.username}}</td>
+          <td>Rejected</td>
+          <td>N/A</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+
+        {% if confirmed %}
+        {% for c in confirmed %}
+          <tr>
+          <td>{{c.subject}}</td>
+          <td>{{c.guru.user.username}}</td>
+          <td>Confirmed</td>
+          <td><a href="/guru/schedule/{{c.id}}"><i class="fa fa-plus-square-o fa-2x"></i></td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+
+      </table>
+
+  </div>
+
+
+
+  <div id="schedule" class="col s12">
+    {% if requests.items %}
+    Requesting your confirmation
+    <ul class="collection">
+      {% for key, value in requests.items %}
+        {% for i in value %}
+          
+      <li class="collection-item avatar">
+        <img src="/guru{{key.0.picture.url}}" alt="{{key.0.picture.url}}" class="circle">
+        <span class="title">{{i.subject}}</span>
+        <p>{{key.0.user.username}} 
+        </p>
+        
+        <div class="secondary-content">
+          <a href="#!"  onclick="dismissRequest(this)"><i class="fa fa-times fa-2x" style="color:red;"></i></a>
+          <a href="#!" onclick="confirmRequest(this)"><i class="fa fa-check fa-2x" style="color:green;"></i></a>
+        </div>
+      </li>
+      {% endfor %}
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+   <h4>Completed Sessions</h4>
+      <table class="responsive-table table1">
+        <thead>
+          <tr>
+              <th>Session Name</th>
+              <th>Student</th>
+              <th>Status</th>
+              <th>Progress</th>
+              <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% if completedData.items %}
+        {% for key, value in completedData.items %}
+           <tr>
+            <td>{{value.listing.subject}}</td>
+            <td>{{value.student.user.username}}</td>
+            <td>{{value.progress}}
+            <td>{{value.status}}</td>
+            <td><a href="/guru/schedule/{{value.listing.id}}/{{value.student.all.0.id}}"><i class="fa fa-plus-square-o fa-2x"></i></a> </td>
+
+          </tr>
+          {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+
+
+    <h4>Upcoming Sessions to Teach</h4>
+      <table class="responsive-table table2">
+        <thead>
+          <tr>
+              <th>Session Name</th>
+              <th>Student</th>
+              <th>Status</th>
+              <th>Progress</th>
+              <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% if upcomingData.items %}
+        {% for key, value in upcomingData.items %}
+           <tr>
+            <td>{{value.listing.subject}}</td>
+            <td>{{value.student.user.username}}</td>
+            <td>{{value.progress}}
+            <td>{{value.status}}</td>
+            <td><a href="/guru/schedule/{{value.listing.id}}/{{value.student.all.0.id}}"><i class="fa fa-plus-square-o fa-2x"></i></a> </td>
+
+          </tr>
+          {% endfor %}
+        {% endif %}
+        </tbody>
+      </table>
+  </div>
+
+  <div id="calendar" class="col s12">Calendar
+
+  <div id="datetimepicker4" class="input-append">
+    <div class="col s1">
+      <span class="add-on">
+      <i class="fa fa-calendar fa-2x" data-time-icon="icon-time" data-date-icon="icon-calendar">
+      </i>
+    </span>
+    </div>
+    <div class="col s11">
+      <input data-format="yyyy-MM-dd" type="text"></input>
+    </div>    
+  </div>
+</div>
+
+
+</div>
+
+  </div>
+  <div id="reminders" class="col s12">Reminders</div>
+</div>
+
+<script>
+
+  // CSRF set-up copied from Django docs
+  function getCookie(name) {  
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+  var csrftoken = getCookie('csrftoken');
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    }
+  });
+
+
+    function dismissRequest(o) {
+      var p=o.parentNode.parentNode;
+    //  console.log(p.firstChild.nextSibling.nextSibling.nextSibling.textContent)
+    //  console.log(p.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.textContent.trim())
+
+      var user = p.firstChild.nextSibling.nextSibling.nextSibling.textContent
+      var listingTitle = p.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.textContent.trim()
+
+      p.parentNode.removeChild(p);
+
+      var joined=user+"_"+listingTitle
+      $.post("/guru/dismiss-request/"+joined)
+      .done(function(data) {
+      });
+
+    }
+
+    function confirmRequest(o) {
+      var p=o.parentNode.parentNode;
+      var listingTitle = p.firstChild.nextSibling.nextSibling.nextSibling.textContent
+    
+      console.log(listingTitle)
+      var user = p.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.textContent.trim()
+      
+      console.log(user)
+      p.parentNode.removeChild(p);
+
+      $.post("/guru/confirm-request", {'user': user, 'listingTitle': listingTitle })
+      .done(function(data) {
+      });
+
+    }
+
+</script>
+
+
+{% endblock %}

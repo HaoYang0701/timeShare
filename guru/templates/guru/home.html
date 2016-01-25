@@ -1,0 +1,210 @@
+{% extends "guru/base.html" %}
+{% load staticfiles %}
+{% block title %}
+<title> guru | home </title>
+{% endblock %}
+
+{% block mainsection %}
+<script type="text/javascript" src="{% static 'js/updateStream.js' %}"></script>
+<div class="row">
+  <div class="col-md-12">
+
+    <h1 class="page-header">
+      <h4>DASHBOARD</h4>
+    </h1>
+  </div>
+</div>
+
+<div class="row">
+        <div class="col m4">
+          <div class="card blue">
+            <div class="card-content white-text">
+              <span class="card-title">Hours Remaining</span>
+              <a href="#modal1" class="hCre btn-floating btn waves-effect waves-light cyan lighten-3 infoButton">
+                <i class="glyphicon glyphicon-question-sign"></i>
+              </a>
+              <h5>{{creditRemaining}}</h5>
+            </div>
+          </div>
+        </div>
+
+        <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Hours Remaining</h4>
+      <p>This is the hours you are able to use for help from others</p>
+    </div>
+     <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Makes Sense</a>
+    </div>
+  </div>
+
+        <div class="col m4">
+          <div class="card blue">
+            <div class="card-content white-text">
+              <span class="card-title">Hours Accumulated</span>
+              <a href="#modal2" class="hAcc btn-floating btn waves-effect waves-light cyan lighten-3 infoButton">
+                <i class="glyphicon glyphicon-question-sign"></i>
+              </a>
+              <h5>{{creditAccumulated}}</h5>
+            </div>
+          </div>
+        </div>
+
+         <div id="modal2" class="modal">
+    <div class="modal-content">
+      <h4>Hours Accumulated</h4>
+      <p>This is the total hours you have earned throughout your lifetime of the account</p>
+    </div>
+     <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Makes Sense</a>
+    </div>
+  </div>
+
+        <div class="col m4">
+          <div class="card blue">
+            <div class="card-content white-text">
+              <span class="card-title">Hours Spent</span>
+              <a href="#modal3" class="hSpe btn-floating btn waves-effect waves-light cyan lighten-3 infoButton">
+                <i class="glyphicon glyphicon-question-sign"></i>
+              </a>
+              <h5>{{creditSpent}}</h5>
+            </div>
+          </div>
+        </div>
+         <div id="modal3" class="modal">
+    <div class="modal-content">
+      <h4>Hours Spent</h4>
+      <p>This is the Hours you have already spent on help from others</p>
+    </div>
+     <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Makes Sense</a>
+    </div>
+  </div>
+
+</div>
+            
+<div class="row">
+
+
+  <div class="col m6">
+    <div class="row">
+      <div class="card blue darken-4">
+            <div class="card-content white-text">
+              <span class="card-title">Sessions (learn)</span>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Guru</th>
+                      <th>Topic</th>
+                      <th>Time</th>
+                      <th>Credits</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for s in student_sessions %}
+                    <tr>
+                      <td>{{s.listing.guru.user.username}}</td>
+                      <td>{{s.listing.subject}}</td>
+                      <td>{{s.proposedTime}}</td>
+                      <td>1</td>
+                      <td>{{s.progress}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="col m6">
+    <div class="row">
+      <div class="card blue darken-4">
+            <div class="card-content white-text">
+              <span class="card-title">Sessions (teach)</span>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Topic</th>
+                      <th>Time</th>
+                      <th>Credits</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in teacher_sessions %}
+                      {% for j in i.student.all %}
+                        <tr>
+                          <td>{{j.user.username}}</td>
+                          <td>{{i.listing.subject}}</td>
+                          <td>{{i.proposedTime}}</td>
+                          <td>1</td>
+                          <td>{{i.progress}}</td>
+                        </tr>
+                      {% endfor %}
+                    {% endfor %}
+                  </tbody>
+                  
+                </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="col-md-12">
+ 
+  <br>
+    <div class="panel panel-default panel-style">
+    <div id="personalizedResults" class="panel-body blue lighten-5">
+    {% if allListings %}
+      {% for listing in allListings %}
+        <div class="row">
+          <a href="/guru/postdetails">
+          <div class="col-md-3">
+            <div class="user-info-wrap"> 
+              <a id="listinguser" href="/guru/profile/{{listing.guru.user.id}}">
+              <div class="user-image">
+                <img src="/guru{{listing.guru.picture.url}}" alt="user" class="img-circle user-size2">
+              </div>
+              <div class="user-info">
+                <div class="username">{{listing.guru.user.username}}</div>
+                <div class="username">{{listing.guru.user.first_name}} {{listing.guru.user.last_name}}</div>
+                
+                {{listing.guru.rating}} <i class="glyphicon glyphicon-star"></i>
+              </div>
+            </a>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <a href="/guru/postdetails/{{listing.id}}">
+            <p class="subject">{{listing.subject}}</p>
+            <p>{{listing.skillType}}</p>
+            <p>{{listing.description}}</p>
+            </a>
+          </div>
+          <div class="col-md-3">
+            <br>
+            {{listing.date|timesince}} ago<br>
+            Location: {{listing.location}}
+          </div>
+        </div>
+      <hr>
+      {% endfor %}
+
+      {% else %}
+      <div><h6 class="center-align">Oops! Looks like there's nothing here. You can try broadening your
+      preferences or wait until someone with a similar interest creates a listing.</h6></div>
+
+      {% endif %}
+    </div>
+  </div>
+</div>
+    
+</div><!-- end row --> 
+{% endblock %}
+

@@ -1,0 +1,58 @@
+{% extends "guru/base.html" %}
+
+
+{% block title %}
+<title> guru | all listings </title>
+{% endblock %}
+
+{% block mainsection %}
+
+
+<div class="col-md-12">
+ 
+  <br>
+    <div class="panel panel-default panel-style">
+    <div class="panel-body">
+      {% if allListings %}
+      {% for listing in allListings %}
+        <div class="row">
+          <a href="/guru/postdetails">
+          <div class="col-md-3">
+            <div class="user-info-wrap"> 
+              <a id="listinguser" href="/guru/profile/{{listing.guru.user.id}}">
+              <div class="user-image">
+                <img src="/guru{{listing.guru.picture.url}}" alt="user" class="img-circle user-size2">
+              </div>
+              <div class="user-info">
+                <div class="username">{{listing.guru.user.username}}</div>
+                <div class="username">{{listing.guru.user.first_name}} {{listing.guru.user.last_name}}</div>
+                
+                {{listing.guru.rating}} <i class="glyphicon glyphicon-star"></i>
+              </div>
+            </a>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <a href="/guru/postdetails/{{listing.id}}">
+            <p class="subject">{{listing.subject}}</p>
+            <p>{{listing.skillType}}</p>
+            <p>{{listing.description}}</p>
+            </a>
+          </div>
+          <div class="col-md-3">
+            <br>
+            {{listing.date|timesince}} ago<br>
+            Location: {{listing.location}}
+          </div>
+        </div>
+      <hr>
+      {% endfor %}
+      {% else %}
+       <div><h6 class="center-align">Oops! Looks like there's nothing here. Maybe you can be the first one to post a listing!</h6></div>
+
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

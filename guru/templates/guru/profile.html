@@ -1,0 +1,131 @@
+{% extends "guru/base.html" %}
+
+
+{% block title %}
+<title> guru | profile </title>
+{% endblock %}
+
+{% block mainsection %}
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-3">
+             <img src="/guru{{ lookupImage.url }}" alt="{{lookupImage.url}}" class="img-circle" width="130" height="130">
+
+          </div>
+          <div class="col-md-3">
+            <span class="profile-name">{{lookupGuru.user.first_name}}</span>
+            </br>
+            <span class="profile-location">{{lookupGuru.location}}</span>
+            </br> 
+            {% if wholes %}
+            {% for i in wholes %}
+            <i class="fa fa-star fa-2x"></i>
+            {% endfor %}
+             {% endif %}
+
+              {% if fraction %}
+            {% for i in fraction %}
+            <i class="fa fa-star-half-o fa-2x"></i>
+            {% endfor %}
+             {% endif %}
+
+              {% if emptys %}
+            {% for i in emptys %}
+            <i class="fa fa-star-o fa-2x"></i>
+            {% endfor %}
+             {% endif %}
+
+            <br>
+            <span class="profile-level">Guru Level: {{lookupGuru.level}} </span>
+          </div>
+          <div class="col-md-3">
+              <div class="card blue darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">Hours Learned</span>
+                  <h4><span style="color:white;">{{lookupGuru.credit.hoursLearned}}</span></h4>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card blue darken-4">
+                <div class="card-content white-text">
+                  <span class="card-title">Hours Taught</span>
+                  <h4><span style="color:white;">{{lookupGuru.credit.hoursTaught}}</span></h4>
+                </div>
+              </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <br><br>
+          <div class="col-md-3">
+            {% if currUser == lookupGuru.user %}
+            <a href="/guru/editprofile" role="button" class="btn btn-info blue btn-block">Edit Profile</a>
+            <br>
+            {% else %}
+            <button type="button" class="btn btn-default btn-block">Message </button>
+            <button type="button" class="btn btn-default btn-block">Follow </button>
+            <br>
+            {% endif %}
+            <div class="card amber darken-1">
+              <div class="card-content white-text">
+                <span class="card-title">Age</span>
+                <p>{{lookupGuru.age}}</p>
+              </div>
+            </div>
+            <div class="card amber darken-2">
+              <div class="card-content white-text">
+                <span class="card-title">Bio</span>
+                <p>{{lookupGuru.bio}}</p>
+              </div>
+            </div>
+            <div class="card amber darken-3">
+              <div class="card-content white-text">
+                <span class="card-title">Age</span>
+                <p>{{lookupGuru.age}}</p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-9">
+           {% if reviews %}
+            {% for r in reviews %}
+            <div class="panel panel-default panel-style">
+              <div class="panel-body">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="user-info-wrap"> 
+                          <div class="user-image">
+                            <img src="/guru{{r.session.student.all.0.picture.url}}" class="img-circle" width="65" height="65">
+                          </div>
+                          <div class="user-info">
+                            <div class="username">{{r.session.student.all.0.user.username}}</div>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <br>
+                            {{r.rating}}
+                            <i class="glyphicon glyphicon-star"></i>
+                        <hr>
+                        <p> {{r.description}}
+                        </p>
+                      </div>
+                      <div class="col-md-3">
+                        <br>
+                        {{r.date}}<br>
+                        Location: {{r.session.listing.location}}
+                      </div>
+                </div>
+              </div>
+            </div>  
+            {% endfor %}
+             {% endif %}
+          </div>
+
+
+  </div>
+{% endblock %}

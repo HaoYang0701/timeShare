@@ -1,0 +1,73 @@
+{% extends "guru/base.html" %}
+{% load staticfiles %}
+<!-- autocomplete + tag lib: 
+    http://www.jqueryscript.net/demo/Material-Design-Tags-Input-Plugin-with-jQuery-Materialize-Tags/
+-->
+{% block title %}
+<title> guru | compose </title>
+{% endblock %}
+
+{% block mainsection %}
+<div class="col-md-12">
+  <div class="row">
+    <br>
+  </div>
+
+    <div class="row">
+    <form class="col s12" action="/guru/sendmessage" method="post">
+      <div class="row">
+
+        <div class="input-field col s12">
+            <input type="text" id="to" class="form-control" value='{{msgusername}}' data-role="materialtags" name="to"/>
+            <label for="to">To</label>
+        
+            <br>
+            <br>
+        </div>
+
+        <div class="input-field col s12">
+          <input id="subject" type="text" class="validate" name="subject">
+          <label for="subject">Subject</label>
+        </div>
+
+        <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea" name="description"></textarea>
+          <label for="body">Body</label>
+        </div>
+
+      </div>
+
+
+      <button class="waves-effect waves-light btn blue searchBtn" type="submit">Send <i class="material-icons right">send</i>
+      </button>
+      {% csrf_token %}
+    </form>
+
+  </div>
+    
+</div>
+
+<script>
+    var usernames = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: {
+            url: 'getusernames', 
+        } 
+        
+    });
+
+    usernames.initialize();
+
+    $('input#to').materialtags({
+        typeaheadjs: {
+            name: 'usernames',
+            displayKey: 'name',
+            valueKey: 'name',
+            source: usernames.ttAdapter()
+        }
+    });
+    var wat = $("input#to").materialtags('items')
+</script>
+
+{% endblock %}

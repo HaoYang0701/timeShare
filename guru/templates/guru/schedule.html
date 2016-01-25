@@ -1,0 +1,322 @@
+{% extends "guru/base.html" %}
+
+
+{% block title %}
+<title> guru | schedule </title>
+{% endblock %}
+
+{% block mainsection %}
+<div class="col s12">
+<h3>Schedule</h3> 
+ {% if studentOrInstructor == 'student' %}
+  <h5 id="student"> Student </h5>
+  {% else %}
+  <h5 id="instructor"> Instructor </h5>
+  {% endif %}
+ 
+  <hr>
+  <div class="col s3">
+    <b>Session ID</b>
+  </div>
+  <div id="sessionId" class="col s9">
+    {{sessionId}}
+  </div>
+  <br>
+  <div class="col s3">
+    <b>Subject</b>
+  </div>
+  <div class="col s9">
+    {{listing.subject}}
+  </div>
+  <br>
+    <div class="col s3">
+    <b>Location</b>
+  </div>
+  <div class="col s9">
+    {{listing.location}}
+  </div>
+  <br>
+    <div class="col s3">
+    <b>Description</b>
+  </div>
+  <div class="col s9">
+    {{listing.description}}
+  </div>
+  <br>
+    <div class="col s3">
+    <b>Date Posted</b>
+  </div>
+  <div class="col s9">
+    {{listing.date}}
+  </div>
+  <br>
+    <div class="col s3">
+    <b>Student</b>
+  </div>
+  <div class="col s9">
+    {{lguru.user.username}}
+  </div>
+
+  <hr>
+  {% if status == 'confirmed' %}
+  <div class="row">
+    <div class="card blue darken-3">
+        <div class="card-content white-text">
+            <span class="card-title">CONFIRMED</span>
+            <p>for <br> {{proposedTime}} </p>
+        </div>
+    </div>
+  </div>
+  {% endif %}
+
+
+  <div class="row">
+    {% if studentOrInstructor == 'instructor' %}
+    {% if proposedTime != "N/A" and status == 'pending' %}
+        <ul class="collection">
+          
+      <li class="collection-item avatar">
+        <span class="title"></span>
+          Student's proposed time 
+          <p> {{ proposedTime}} </p>
+        <div class="secondary-content">
+          <a href="#!"  onclick="dismissRequest(this)"><i class="fa fa-times fa-2x" style="color:red;"></i></a>
+          <a href="#!" onclick="confirmRequest(this)"><i class="fa fa-check fa-2x" style="color:green;"></i></a>
+        </div>
+      </li>
+    </ul>
+     {% endif %}
+  {% endif %}
+  </div>
+  
+        
+   
+{% if status != 'confirmed' %}
+<div class="col s6">
+  <div class="card blue">
+    <div class="card-content white-text">
+        <span class="card-title">Provide available dates and times</span>
+      
+        <form action="/guru/add-date" method="post">
+          <input type="hidden" id="listingID" name="listingID" value="{{listing.id}}">
+          <input type="hidden" id="studentID" name="studentID"value="{{lguru.id}}">
+          <input type="hidden" id="studentOrInstructor" name="studentOrInstructor" value="{{studentOrInstructor}}">
+
+          <div class="row">
+            <div class="col s4">
+              Date
+            </div>
+            <div class="col s8">
+              <input id="date" type="date" name="date" class="datepicker" placeholder="Choose Date">
+            </div> 
+          </div>
+
+          <div class="row">
+            <div class="col s4">
+              From
+            </div>
+            <div class="col s5">
+              <input id="fromTime" name="fromTime" type="text" placeholder="8:00">
+            </div>
+            <div class="col s3">
+              <select id="fromAMPM" name="fromAMPM" class="form-control">
+                <option>AM</option>
+                <option>PM</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col s4">
+              To
+            </div>
+            <div class="col s5">
+              <input id="toTime" name="toTime" type="text" placeholder="9:00">
+            </div>
+            <div class="col s3">
+              <select id="toAMPM" name="toAMPM" class="form-control">
+                <option>AM</option>
+                <option>PM</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="waves-effect waves-light btn" >Add</button>
+          {% csrf_token %}
+        </form>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if status != 'confirmed' %}
+<div class="col s6">
+
+  <div class="card blue lighten-2">
+    <div class="card-content white-text">
+        <span class="card-title">Availabilities</span>
+        <div class="row">
+          <div class="col s6">
+      <p>
+        <b>Instructor:</b>
+
+        {% if studentOrInstructor == 'student' %}
+          <ol id="s-idates-list">
+
+          {% for i in i_dts %}
+              <li>  {{i.date}} {{i.fromTime}} to {{i.toTime}} </li>
+          {% endfor %}
+          </ol>
+        {% else %}
+            <ol id="i-idates-list">
+                {% for i in i_dts %}
+              <li>  {{i.date}} {{i.fromTime}} to {{i.toTime}} </li>
+          {% endfor %}
+
+            </ol>
+        {% endif %}
+      </p>
+      </div>
+    
+  <div class="col s6">
+      <p>
+        <b>Student:</b>
+
+         {% if studentOrInstructor == 'student' %}
+            <ol id="s-sdates-list">
+            {% for s in s_dts %}
+              <li>
+                {{s.date}} {{s.fromTime}} to {{s.toTime}} </li>
+            {% endfor %}
+            </ol>
+          {% else %}
+              <ol id="i-sdates-list">
+                  {% for s in s_dts %}
+              <li>
+                {{s.date}} {{s.fromTime}} to {{s.toTime}} </li>
+            {% endfor %}
+
+            </ol>
+
+          {% endif %}
+      </p>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if status != 'confirmed' %}
+<div class="row">
+  <div class="col s6">
+    {% if studentOrInstructor == 'student' %}
+    <div class="card blue darken-3">
+      <div class="card-content white-text">
+          {% if status == 'N/A' %}
+          <span class="card-title">Pick a time to meet:</span>
+          
+          <form action="/guru/confirm-date" method="post">
+            <input type="hidden" id="listingID" name="listingID" value="{{listing.id}}">
+            <input type="hidden" id="studentID" name="studentID"value="{{lguru.id}}">
+            <input type="hidden" id="studentOrInstructor" name="studentOrInstructor" value="{{studentOrInstructor}}">
+
+            <select id="cdate" name="cdate" class="form-control">
+              {% for i in i_dts %}
+                <option>  {{i.date}} {{i.fromTime}} to {{i.toTime}} </option>
+              {% endfor %}
+
+            </select>
+            <br>
+             <button type="submit" class="waves-effect waves-light btn" >Confirm</button>
+              {% csrf_token %}
+            </form>
+            {% endif %}
+
+            {% if status != 'N/A' %}
+             <span class="card-title">Status</span>
+             {{status}}
+            {% endif %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+
+
+</div>
+
+
+<script>
+ $('.datepicker').pickadate({
+  format: 'mm/dd/yyyy',
+  selectMonths: true, // Creates a dropdown to control month
+  selectYears: 15, // Creates a dropdown of 15 years to control year
+  onClose: function() {
+     $(document.activeElement).blur()
+   }
+  });
+
+
+ // CSRF set-up copied from Django docs
+  function getCookie(name) {  
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+  var csrftoken = getCookie('csrftoken');
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    }
+  });
+
+
+    function dismissRequest(o) {
+      var p=o.parentNode.parentNode;
+      var dt = p.firstChild.nextSibling.nextSibling.nextSibling.textContent
+      p.parentNode.removeChild(p);
+
+      var sessionId = document.getElementById("sessionId").firstChild.textContent.trim();
+
+      $.post("/guru/dismiss-sched", {'dt': dt, 'sessionId': sessionId })
+      .done(function(data) {
+      }); 
+
+    }
+
+    function confirmRequest(o) {
+      var p=o.parentNode.parentNode;
+      var dt = p.firstChild.nextSibling.nextSibling.nextSibling.textContent
+
+      p.parentNode.removeChild(p);
+      var sessionId = document.getElementById("sessionId").firstChild.textContent.trim();
+
+      $.post("/guru/confirm-sched", {'dt': dt, 'sessionId': sessionId })
+      .done(function(data) {
+      }); 
+
+    }
+
+     $('#datetimepicker4').datetimepicker({
+      format: 'MM/dd/yyyy',
+      pickTime: false
+    });
+
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,405 @@
+{% extends "guru/base.html" %}
+{% load staticfiles %}
+
+
+{% block title %}
+<title> guru | settings </title>
+{% endblock %}
+
+{% block mainsection %}
+  <script type="text/javascript" src="{% static 'js/updateInterest.js' %}"></script>
+  
+  <form action="/guru/updateInterests" id='checkUpdatedInterestForm' method="post">
+  {% csrf_token %}
+  <div class='container'>
+    <ul class="collapsible popout" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">cloud</i>Software</div>
+        <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Android Development  
+      <input type="checkbox" id="checkB" name="Android Development"/>
+      <label for="checkB">Yes Please</label>
+      </div>
+
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>iOS Development
+        <input type="checkbox" id="checkB1" name="iOS Development" />
+      <label for="checkB1">Yes Please</label>
+        </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Web Application Development
+        <input type="checkbox" id="checkB2" name="Web Application Development" />
+      <label for="checkB2">Yes Please</label>
+      </div>
+
+        </li>
+        </ul>
+
+
+        </div>
+    </li>
+    
+    <li>
+      <div class="collapsible-header"><i class="material-icons">desktop_windows</i>Computers</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Hardware
+          <input type="checkbox" id="checkB3" name="Hardware" />
+      <label for="checkB3">Yes Please</label>
+        </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Software
+        <input type="checkbox" id="checkB4" name="Software"/>
+      <label for="checkB4">Yes Please</label>
+      </div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">web</i>Graphic Design</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Electronic Media
+        <input type="checkbox" id="checkB5" name="Electronic Media" />
+      <label for="checkB5">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Print
+        <input type="checkbox" id="checkB6" name ="Print" />
+      <label for="checkB6">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Animation
+        <input type="checkbox" id="checkB7" name="Animation" />
+      <label for="checkB7">Yes Please</label>
+      </div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="fa fa-cutlery fa-2x"></i>Food/Cooking</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Recipes
+        <input type="checkbox" id="checkB9" name="Recipes"/>
+      <label for="checkB9">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Techniques
+        <input type="checkbox" id="checkB10" name="Techniques"/>
+      <label for="checkB10">Yes Please</label>
+      </div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">style</i>Design</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Brand
+          <input type="checkbox" id="checkB11" name="Brand"/>
+      <label for="checkB11">Yes Please</label>
+        </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Fashion
+        <input type="checkbox" id="checkB12" name="Fashion"/>
+      <label for="checkB12">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Product
+        <input type="checkbox" id="checkB13" name="Product" />
+      <label for="checkB13">Yes Please</label>
+      </div>
+        </li>
+  </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="fa fa-photo fa-2x"></i>Art</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Decorative
+        <input type="checkbox" id="checkB14" name="Decorative"/>
+      <label for="checkB14">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Drawing
+        <input type="checkbox" id="checkB15" name="Drawing" />
+      <label for="checkB15">Yes Please</label></div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Glass
+        <input type="checkbox" id="checkB16" name="Glass"/>
+      <label for="checkB16">Yes Please</label>
+        </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Painting
+        <input type="checkbox" id="checkB17" name="Painting"/>
+      <label for="checkB17">Yes Please</label>
+      </div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="fa fa-building fa-2x"></i>Home Improvement</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>
+        Electrical
+        <input type="checkbox" id="checkB18" name="Electrical"/>
+      <label for="checkB18">Yes Please</label></div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Interior Design
+        <input type="checkbox" id="checkB19" name="Interior Design" />
+      <label for="checkB19">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Landscape
+        <input type="checkbox" id="checkB20" name="Landscape" />
+      <label for="checkB20">Yes Please</label></div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Decorations
+        <input type="checkbox" id="checkB21" name="Decorations"  />
+      <label for="checkB21">Yes Please</label></div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Plumbing
+        <input type="checkbox" id="checkB22" name="Plumbing" />
+      <label for="checkB22">Yes Please</label>
+      </div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="fa fa-rocket fa-2x"></i>Science</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>
+      Biology
+       <input type="checkbox" id="checkB23" name="Biology" />
+      <label for="checkB23">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Chemistry
+        <input type="checkbox" id="checkB24" name="Chemistry" />
+      <label for="checkB24">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Physics
+        <input type="checkbox" id="checkB25" name="Physics" />
+      <label for="checkB25">Yes Please</label></div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">whatshot</i>Writing</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Non-Fiction
+        <input type="checkbox" id="checkB26" name="Non-Fiction"/>
+      <label for="checkB26">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Fiction
+        <input type="checkbox" id="checkB27" name="Fiction" />
+      <label for="checkB27">Yes Please</label></div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="fa fa-heartbeat fa-2x"></i>Health</div>
+     <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i> Physical
+        <input type="checkbox" id="checkB28" name="Physical" />
+      <label for="checkB28">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i> Mental
+        <input type="checkbox" id="checkB29" name="Mental" />
+      <label for="checkB29">Yes Please</label>
+      </div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">business</i>Business</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i> Economics
+        <input type="checkbox" id="checkB30" name="Economics" />
+      <label for="checkB30">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i> Entrepeneurship
+        <input type="checkbox" id="checkB31" name="Entrepeneurship" />
+      <label for="checkB31">Yes Please</label></div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">panorama</i>Photography</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i> Black and White
+        <input type="checkbox" id="checkB32" name="Black and White" />
+      <label for="checkB32">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i> Color
+        <input type="checkbox" id="checkB33" name="Color" />
+      <label for="checkB33">Yes Please</label></div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="fa fa-book fa-2x"></i>Accounting</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i> Auditing
+        <input type="checkbox" id="checkB34" name="Auditing" />
+      <label for="checkB34">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i> Taxes
+        <input type="checkbox" id="checkB35" name="Taxes" />
+      <label for="checkB35">Yes Please</label></div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">class</i>History</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i> Documents
+        <input type="checkbox" id="checkB36" name="Documents" />
+      <label for="checkB36">Yes Please</label></div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i> Images
+        <input type="checkbox" id="checkB37" name="Images" />
+      <label for="checkB37">Yes Please</label></div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">directions_run</i>Fitness</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Body Building
+        <input type="checkbox" id="checkB38" name="Body Building" />
+      <label for="checkB38">Yes Please</label></div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Weight Loss
+        <input type="checkbox" id="checkB39" name="Weight Loss" />
+      <label for="checkB39">Yes Please</label></div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Personal Trainer
+        <input type="checkbox" id="checkB40" name="Personal Trainer" />
+      <label for="checkB40">Yes Please</label>
+      </div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">whatshot</i>Career Planning</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i> Employment counsellor
+        <input type="checkbox" id="checkB41" name="Employment counsellor" />
+      <label for="checkB41">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i> Resume
+        <input type="checkbox" id="checkB42" name="Resume" />
+      <label for="checkB42">Yes Please</label>
+      </div>
+        </li>
+        </ul>
+    </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">language</i>Language</div>
+      <div class="collapsible-body blue accent-1">
+        <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Speaking
+        <input type="checkbox" id="checkB43" name="Speaking" />
+      <label for="checkB43">Yes Please</label>
+      </div>
+        </li>
+        <li>
+        <div class="collapsible-header"><i class="material-icons"></i>Writing
+        <input type="checkbox" id="checkB44" name="Writing" />
+      <label for="checkB44">Yes Please</label></div>
+        </li>
+        </ul>
+    </div>
+    </li>
+     <li>
+    <div class='row'>
+    <a id="updateInterests" type="submit" class="waves-effect waves-light btn-large blue lighten-1 col m12">Update Preferences</a>
+    
+
+    </div>
+    </li>
+    </ul>
+    </div> 
+
+     </form>
+
+{% endblock %}

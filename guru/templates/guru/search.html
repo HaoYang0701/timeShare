@@ -1,0 +1,18 @@
+{% extends "guru/base.html" %}
+{% load staticfiles %}
+
+
+{% block title %}
+<title> guru | settings </title>
+{% endblock %}
+{% block mainsection %}
+	{% if results%}
+	{% for result in results %}
+		<div >
+		<a class="waves-effect waves-light btn" href="/guru/profile/{{result.usernames}}">{{result.usernames}}</a>
+		<p>Skills : {{result.skills}}</p>
+		</div> 
+		<hr>
+	{% endfor %}
+	{% endif %}
+{% endblock %}

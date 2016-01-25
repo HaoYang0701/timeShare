@@ -1,0 +1,38 @@
+{% extends "guru/base.html" %}
+
+
+{% block title %}
+<title> guru | reminders </title>
+{% endblock %}
+
+{% block mainsection %}
+      <div class="col-md-12">
+        <br>
+          <h4>Text Reminders</h4>
+
+       <form class="col s12" action="/guru/sendtext" method="post">
+        <div class="row">
+
+          <div class="input-field col s6">
+            <input id="cellnum" name="cellnum" type="text" class="validate">
+            <label  for="cellnum">Enter cell number (e.g. +14123334444)</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="message" name="message" type="text" class="validate">
+            <label for="message">Enter a message</label>
+          </div>
+        </div>
+        <br>
+       <!-- <a class="waves-effect waves-light btn" href="/guru/sendtext">Send Text</a>-->
+       <button class="waves-effect waves-light btn blue searchBtn" type="submit">Send Text <i class="material-icons right">send</i>
+      </button><br><br>
+      {% csrf_token %}
+    </form>
+        
+
+          </div>
+        </div>
+  </div>
+{% endblock %}

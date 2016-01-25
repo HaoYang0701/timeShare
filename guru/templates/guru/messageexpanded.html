@@ -1,0 +1,76 @@
+{% extends "guru/base.html" %}
+
+
+{% block title %}
+<title> guru | messages </title>
+{% endblock %}
+
+{% block mainsection %}
+<div class="col-md-12">
+
+   <ul class="collapsible" data-collapsible="expandable">
+    <!-- original msg -->
+    <li>
+      <div class="collapsible-header">
+        From 
+        <a href="/guru/profile/{{fromGuru.user.id}}">
+          <div class="chip">
+            <img src="/guru{{fromGuru.picture.url}}" alt="Contact Person">
+              {{fromGuru.user.username}}
+          </div>
+        </a>
+        <b> {{message.subject}} </b> - {{message.body|truncatewords:5}}
+        <div class="chip emailtime">{{message.date}}</div>
+      </div>
+      <div class="collapsible-body" style="display: none;">
+        <p>{{message.body}}</p>
+      </div>
+    </li>
+    
+    <!-- replies -->
+    {% if message.reply_set.all %}
+    {% for reply in message.reply_set.all %}
+    <li>
+      <div class="collapsible-header">
+        From 
+        <a href="/guru/profile/{{reply.fromGuru.user.id}}">
+          <div class="chip">
+            <img src="/guru{{reply.fromGuru.picture.url}}" alt="Contact Person">
+              {{reply.fromGuru.user.username}}
+          </div>
+        </a>
+        {{reply.body|truncatewords:5}}
+        <div class="chip emailtime">{{reply.date}}</div>
+      </div>
+      <div class="collapsible-body" style="display: none;">
+        <p>{{reply.body}}</p>
+      </div>
+    </li>
+
+  {% endfor %}
+  {% endif %}
+   </ul>
+  }
+
+  <div class="card white">
+    <div class="card-content blue-text">
+      <div class="row">
+        <form class="col s12" action="/guru/sendreply" method="post">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="textarea1" class="materialize-textarea" name="replytext"></textarea>
+              <label for="textarea1">Reply</label>
+            </div>
+          </div>
+
+          <input type="hidden" name="messageId" value="{{message.id}}">
+          <button class="waves-effect waves-light btn blue searchBtn" type="submit">Send <i class="material-icons right">send</i>
+          </button>
+          {% csrf_token %}
+        </form>
+      </div>
+    </div>
+  </div>
+       
+</div>
+{% endblock %}

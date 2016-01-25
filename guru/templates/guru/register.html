@@ -1,0 +1,84 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>guru</title>
+    <link href= "{% static 'bootstrap-3.3.5-dist/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app.css'%}">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"media="screen,projection">
+  </head>
+
+  <body class="bg-style"> 
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <div class="container cont-2 text-center reg" >
+      <h2>register</h2>
+      
+    </div>
+    <div>
+      <div class="modal-dialog modal-vertical-centered2">
+        <div class="modal-content">
+          <div class="modal-body allCenter">
+            <form class="form-horizontal col s12" method="POST" action='/guru/newuser'>{% csrf_token %}
+            <div class='row'>
+            <div class="input-field col s12">
+                
+                 {{create_registration_form.email}}
+
+                 {{create_registration_form.non_field_errors}}
+                 <label class="blue-text">Email</label>
+            </div>
+            </div>
+
+            <div class='row'>
+            <div class="input-field col s12">
+            
+                 {{create_registration_form.username}}
+                 {{create_registration_form.username.errors}}
+                 <label class="blue-text">Username</label>
+            </div>
+            </div>
+          <div class='row'>
+          <div class="input-field col s6">
+          
+          {{create_registration_form.password}}
+          {{create_registration_form.password.errors}}
+          <label class="blue-text">Password</label>
+            </div>
+        <div class="input-field col s6">
+         
+           {{create_registration_form.confirmpassword}}
+           {{create_registration_form.confirmpassword.errors}}
+          <label class="blue-text" >Confirm Password</label>
+        </div>  
+        </div>
+
+        <div class='row'>
+          <div class="input-field col s6">
+          {{create_registration_form.firstname}}
+          {{create_registration_form.firstname.errors}}
+          <label class="blue-text">First Name</label>
+            </div>
+        <div class="input-field col s6">
+
+           {{create_registration_form.lastname}}
+            {{create_registration_form.lastname.errors}}
+          <label class="blue-text">Last Name</label>
+        </div>  
+        </div>
+                 
+                     
+                      
+          <button class="btn waves-effect waves-light blue" type="submit" name="action">Register
+                <i class="material-icons right">send</i>
+                  </button>             
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TimeShare</title>
+
+    <link href= "{% static 'bootstrap-3.3.5-dist/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app.css'%}">
+    <link href= "{% static 'font/font-awesome-4.4.0/css/font-awesome.min.css'%}" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"media="screen,projection">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+  </head>
+
+  <body class="bg-style">
+   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/paral.js' %}"></script>
+  
+    
+    <div class="container text-center">
+      <img class="responsive-img circle Logo" src="{% static 'images/LogoTrans.png' %}">
+      <h1>TimeShare</h1>
+      
+    </div>
+
+    <div  >
+      <div class="modal-dialog  topcorner z-depth-5">
+        <div class="modal-content">
+          <div class="modal-body allCenter">
+          {% if form.errors %}
+            <p>
+            Incorrect user name and password.
+            </p>
+          {% endif %}
+              <br>
+              <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+              {% csrf_token %}
+              
+              <div class="input-field">
+              {{ form.username }}
+
+              <label class="blue-text">Username</label>
+               
+               
+               </div>
+
+               <div class="input-field noTop">
+                {{ form.password }}
+                <label class="blue-text">Password</label>
+              </div>
+            
+              <div> 
+                  <button class="btn waves-effect waves-light blue"  type="submit" name="action">Login
+                <i class="material-icons right">send</i>
+                  </button>
+                 
+              </div>
+              <br>
+                <a href="/guru/reset" class="blue-text"> Forgot Password? </a>
+              <br>
+                New to guru? <a href="/guru/register" class="blue-text"> Sign up </a>
+              </form>
+         
+          </div>
+        </div>
+      </div>
+    </div>
+
+   
+
+    <div class="parallax-container valign-wrapper">
+    <div class="parallax"><img src="{% static 'images/bg.jpg' %}"></div>
+    <div>
+   
+    <h5 class="white-text center-align"> Is there a particular set of skills that you're great at? 
+    </h5>
+
+    <h5 class="white-text center-align"> Do you have something you absolutely hate, but have to get done?
+    </h5>
+
+   <h5 class="white-text center-align"> With TimeShare, you can trade your time for someone else's! 
+    </h5>
+
+  <h5 class="white-text center-align">
+  Help others do what you love, while getting rewarded with hours you can spend on hiring other to do what you dont.
+  </h5>
+
+  
+    </div>
+    <i class=" right-align fa fa-heart fa-5x"></i>
+    </div>
+
+
+    <div class="container promoContainer">
+     <div class="row">
+
+      <div class="col s4 promoDiv">
+         <i class="large material-icons promoIcon">dashboard</i>
+         <h3 class="white-text promoText">Intuitive to Use</h3>
+         <p class="white-text">Get started right away, nothing to learn!</p>
+      </div>
+      <div class="col s4 promoDiv">
+        <i class="large material-icons promoIcon">trending_up</i>
+        <h3 class="white-text promoText">Increase Productivity</h3>
+        <p class="white-text">Do only what you're best at!</p>
+      </div>
+
+      <div class="col s4 promoDiv">
+         <i class="large material-icons promoIcon">today</i>
+        <h3 class="white-text promoText">Fits your schedule</h3>
+        <p class="white-text">
+        Coordinate projects to fit your availibility
+        </p>
+      </div>
+      
+    </div>
+    </div>
+          
+  </body>
+</html>

@@ -1,0 +1,80 @@
+{% extends "guru/base.html" %}
+{% load staticfiles %}
+
+
+{% block title %}
+<title> guru | new listing </title>
+{% endblock %}
+
+{% block mainsection %}
+<script type="text/javascript" src="{% static 'js/interestTag.js' %}"></script>
+<div class="col-md-12">
+  <div class="row">
+    <br>
+    New Listing
+  </div>
+  
+  {% if errors %}
+    {% for error in errors %}
+      <p>{{error}}</p>
+    {% endfor %}
+  {% endif %}
+
+    <div class="row">
+    <form class="col s12" action="/guru/addlisting" method="post">
+      <div class="row">
+
+      <div id='tagDiv' class="input-field col s12">
+        <input id="listing_tag cate" type="text" class="validate" data-role="materialtags" name="skillType">
+        <label id="tag_label" for="listing_tag">Tags</label>
+      </div>
+
+      <div class="input-field col s12">
+          <input id="listing_title" type="text" class="validate" name="title">
+          <label for="listing_title">Title</label>
+        </div>
+
+      <div class="input-field col s12">
+        <input id="listing_loc" type="text" class="validate" name="location" 
+        value={{ location }}>
+        <label for="listing_loc">Location</label>
+      </div>
+
+        <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea" name="description"></textarea>
+          <label for="listing_description">Description</label>
+        </div>
+      </div>
+
+      <button class="waves-effect waves-light btn blue searchBtn" type="submit">Post <i class="material-icons right">send</i>
+      </button>
+      {% csrf_token %}
+    </form>
+
+  </div>
+    
+</div>
+ <script>
+    var categories = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: {
+            url: 'getcategories', 
+        } 
+        
+    });
+
+    categories.initialize();
+
+    $('input#cate').materialtags({
+        typeaheadjs: {
+            name: 'categories',
+            displayKey: 'name',
+            valueKey: 'name',
+            source: categories.ttAdapter()
+        }
+    });
+    var wat = $("input#cate").materialtags('items')
+
+</script>
+{% endblock %}
