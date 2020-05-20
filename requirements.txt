@@ -14,7 +14,7 @@ django-toolbelt==0.0.1
 elasticsearch==2.1.0
 gnureadline==6.3.3
 gunicorn==19.3.0
-httplib2==0.9.2
+httplib2==0.18.0
 ipython==4.0.0
 ipython-genutils==0.1.0
 macholib==1.5.1
